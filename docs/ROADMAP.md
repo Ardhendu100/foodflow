@@ -89,18 +89,17 @@ Establish professional project structure.
 
 ### Create Repository
 
-* [*] Initialize Git repository
-* [*] Create GitHub repository
-* [ ] Configure .gitignore
-* [ ] Configure pre-commit hooks
+* [x] Initialize Git repository
+* [x] Create GitHub repository
+* [x] Configure .gitignore
+* [x] Configure pre-commit hooks
 
 ### Setup Tooling
 
-* [ ] Python 3.13+
-* [ ] uv package manager
-* [ ] Ruff
-* [ ] Black
-* [ ] Pytest
+* [x] Python 3.12+
+* [x] uv package manager
+* [x] Ruff
+* [x] Pytest
 * [ ] Docker
 
 ### Create Structure
