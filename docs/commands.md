@@ -158,3 +158,35 @@ uv sync
 ```bash
 tree -L 3
 ```
+## PostgreSQL command
+
+```bash
+sudo -u postgres psql
+```
+
+```bash
+CREATE DATABASE foodflow;
+```
+
+```bash
+CREATE USER foodflow_user WITH PASSWORD 'foodflow_password';
+```
+
+```bash
+GRANT ALL PRIVILEGES ON DATABASE foodflow TO foodflow_user;
+```
+
+```bash
+psql -h localhost -U foodflow_user -d foodflow
+```
+
+## Install Database Dependencies
+
+```bash
+uv add sqlalchemy alembic "psycopg[binary]"
+```
+<!-- Why these above
+SQLAlchemy-> Python ↔ Database ORM
+Alembic -> Database Schema Version Control
+psycopg -> psycopg
+-->
