@@ -89,8 +89,8 @@ Establish professional project structure.
 
 ### Create Repository
 
-* [ ] Initialize Git repository
-* [ ] Create GitHub repository
+* [*] Initialize Git repository
+* [*] Create GitHub repository
 * [ ] Configure .gitignore
 * [ ] Configure pre-commit hooks
 
