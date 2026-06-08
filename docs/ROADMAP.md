@@ -530,3 +530,53 @@ By project completion, I should be able to independently design and discuss:
 * Scalable Backend Architecture
 
 without relying on AI assistance.
+
+
+
+Sprint 1
+---------
+Auth
+RBAC
+
+Sprint 2
+---------
+Users
+Restaurants
+Menus
+
+Sprint 3
+---------
+Cart
+Orders
+
+Sprint 4
+---------
+Payments
+Deliveries
+
+Sprint 5
+---------
+Notifications
+Celery
+Background Jobs
+
+Sprint 6
+---------
+Redis
+Caching
+
+Sprint 7
+---------
+Docker
+NGINX
+
+Sprint 8
+---------
+Message Queues
+Event Driven Architecture
+
+Sprint 9
+---------
+Performance
+Scaling
+Observability

@@ -18,6 +18,9 @@ from foodflow.application.auth.dependencies import (
 )
 from foodflow.domain.models.user import User
 
+from foodflow.application.auth.permission import (
+    require_permission,
+)
 
 router = APIRouter(
     prefix="/auth",
@@ -108,3 +111,12 @@ def get_me(
     Get the currently authenticated user's profile.
     """
     return current_user
+
+
+@router.get("/admin-test")
+def admin_test(
+    _: None = Depends(  # why -> We don't need any value returned.
+        require_permission("admin:access")
+    ),
+):
+    return {"message": "RBAC works successfully"}

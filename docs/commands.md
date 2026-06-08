@@ -178,6 +178,10 @@ GRANT ALL PRIVILEGES ON DATABASE foodflow TO foodflow_user;
 
 ```bash
 psql -h localhost -U foodflow_user -d foodflow
+
+\c foodflow foodflow_user localhost
+
+\dt
 ```
 
 ## Install Database Dependencies
