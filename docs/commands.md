@@ -356,3 +356,22 @@ Migration File
 Alembic Upgrade
 ↓
 PostgreSQL Tables
+
+
+## Install Auth Dependencies
+
+```bash
+uv add python-jose[cryptography]
+uv add passlib[bcrypt]
+uv add email-validator
+```
+<!--
+python-jose
+    JWT creation/validation
+
+passlib
+    Password hashing
+
+email-validator
+    Email validation for Pydantic
+ -->

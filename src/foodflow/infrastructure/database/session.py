@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from foodflow.shared.config.settings import settings
 
 engine = create_engine(
-    settings.database_url,
+    settings.DATABASE_URL,
     echo=True,
 )
 
@@ -14,3 +14,13 @@ SessionLocal = sessionmaker(
     autoflush=False,
     autocommit=False,
 )
+
+
+def get_db():
+    db = SessionLocal()
+
+    try:
+        yield db
+
+    finally:
+        db.close()

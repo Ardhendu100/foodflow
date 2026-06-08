@@ -157,9 +157,9 @@ Entities:
 
 ### Database
 
-* [ ] PostgreSQL setup
-* [ ] SQLAlchemy setup
-* [ ] Alembic setup
+* [x] PostgreSQL setup
+* [x] SQLAlchemy setup
+* [x] Alembic setup
 
 ### Auth
 
