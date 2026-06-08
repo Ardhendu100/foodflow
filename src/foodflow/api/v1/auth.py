@@ -6,12 +6,18 @@ from foodflow.application.auth.schemas import (
     LoginRequest,
     TokenResponse,
     RefreshTokenRequest,
+    UserResponse,
 )
 from foodflow.application.auth.service import AuthService
 from foodflow.infrastructure.database.session import get_db
 from foodflow.infrastructure.repositories.auth_repository import (
     AuthRepository,
 )
+from foodflow.application.auth.dependencies import (
+    get_current_user,
+)
+from foodflow.domain.models.user import User
+
 
 router = APIRouter(
     prefix="/auth",
@@ -89,3 +95,16 @@ def refresh_token(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=str(error),
         )
+
+
+@router.get(
+    "/me",
+    response_model=UserResponse,
+)
+def get_me(
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Get the currently authenticated user's profile.
+    """
+    return current_user
