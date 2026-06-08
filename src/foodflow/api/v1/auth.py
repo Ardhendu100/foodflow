@@ -5,6 +5,7 @@ from foodflow.application.auth.schemas import (
     RegisterRequest,
     LoginRequest,
     TokenResponse,
+    RefreshTokenRequest,
 )
 from foodflow.application.auth.service import AuthService
 from foodflow.infrastructure.database.session import get_db
@@ -60,6 +61,28 @@ def login(
 
     try:
         return service.login_user(request)
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(error),
+        )
+
+
+@router.post(
+    "/refresh",
+    response_model=TokenResponse,
+)
+def refresh_token(
+    request: RefreshTokenRequest,
+    db: Session = Depends(get_db),
+):
+    repository = AuthRepository(db)
+
+    service = AuthService(repository)
+
+    try:
+        return service.refresh_access_token(request.refresh_token)
 
     except ValueError as error:
         raise HTTPException(

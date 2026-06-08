@@ -9,7 +9,7 @@ from datetime import (
     timedelta,
     timezone,
 )  # For handling token expiration times
-from jose import jwt  # For creating and verifying JSON Web Tokens (JWTs)
+from jose import jwt, JWTError  # For creating and verifying JSON Web Tokens (JWTs)
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
@@ -50,7 +50,7 @@ def create_access_token(
 
     expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    to_encode.update({"exp": expire})
+    to_encode.update({"exp": expire, "type": "access"})
 
     return jwt.encode(
         to_encode,
@@ -78,3 +78,23 @@ def create_refresh_token(
         SECRET_KEY,
         algorithm=ALGORITHM,
     )
+
+
+def decode_token(
+    token: str,
+) -> dict:
+    """
+    Decode and validate a JWT token.
+    """
+
+    try:
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM],
+        )
+
+        return payload
+
+    except JWTError:
+        raise ValueError("Invalid or expired token")

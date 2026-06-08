@@ -8,11 +8,13 @@ from foodflow.application.auth.security import (
     verify_password,
     create_access_token,
     create_refresh_token,
+    decode_token,
 )
 from foodflow.domain.models.user import User
 from foodflow.infrastructure.repositories.auth_repository import (
     AuthRepository,
 )
+from uuid import UUID
 
 
 class AuthService:
@@ -83,5 +85,50 @@ class AuthService:
         return TokenResponse(
             access_token=access_token,
             refresh_token=refresh_token,
+            token_type="bearer",
+        )
+
+    def refresh_access_token(
+        self,
+        refresh_token: str,
+    ) -> TokenResponse:
+        """
+        Generate new access and refresh tokens.
+        """
+
+        payload = decode_token(refresh_token)
+
+        token_type = payload.get("type")
+
+        if token_type != "refresh":
+            raise ValueError("Invalid refresh token")
+
+        user_id = payload.get("sub")
+
+        if not user_id:
+            raise ValueError("Invalid token payload")
+
+        user = self.repository.get_user_by_id(UUID(user_id))
+
+        if not user:
+            raise ValueError("User not found")
+
+        new_access_token = create_access_token(
+            {
+                "sub": str(user.id),
+                "email": user.email,
+            }
+        )
+
+        new_refresh_token = create_refresh_token(
+            {
+                "sub": str(user.id),
+                "email": user.email,
+            }
+        )
+
+        return TokenResponse(
+            access_token=new_access_token,
+            refresh_token=new_refresh_token,
             token_type="bearer",
         )

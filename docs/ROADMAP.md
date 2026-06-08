@@ -163,8 +163,8 @@ Entities:
 
 ### Auth
 
-* [ ] User registration
-* [ ] User login
+* [x] User registration
+* [x] User login
 * [ ] JWT access token
 * [ ] Refresh token
 
