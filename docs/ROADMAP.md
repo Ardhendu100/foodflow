@@ -165,22 +165,20 @@ Entities:
 
 * [x] User registration
 * [x] User login
-* [ ] JWT access token
-* [ ] Refresh token
+* [x] JWT access token
+* [x] Refresh token
 
 ### RBAC
 
-* [ ] Role model
-* [ ] Permission model
-* [ ] Role assignment
+* [x] Role model
+* [x] Permission model
+* [x] Role assignment
 
 ### Testing
 
 * [ ] Unit tests
 * [ ] Integration tests
 
-Checkpoint:
-Explain JWT flow without notes.
 
 ---
 

@@ -1,29 +1,33 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import Boolean, DateTime, String
+from sqlalchemy import Boolean, DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from foodflow.infrastructure.database.base import Base
 
 
-class User(Base):
-    __tablename__ = "users"
+class Restaurant(Base):
+    __tablename__ = "restaurants"
 
     id: Mapped[UUID] = mapped_column(
         primary_key=True,
         default=uuid4,
     )
 
-    full_name: Mapped[str] = mapped_column(
+    owner_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False,
+    )
+
+    name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
     )
 
-    email: Mapped[str] = mapped_column(
-        String(255),
-        unique=True,
-        nullable=False,
+    description: Mapped[str | None] = mapped_column(
+        String(1000),
+        nullable=True,
     )
 
     phone: Mapped[str] = mapped_column(
@@ -32,8 +36,9 @@ class User(Base):
         nullable=False,
     )
 
-    password_hash: Mapped[str] = mapped_column(
+    email: Mapped[str] = mapped_column(
         String(255),
+        unique=True,
         nullable=False,
     )
 
@@ -58,15 +63,7 @@ class User(Base):
         onupdate=lambda: datetime.now(UTC),
     )
 
-    user_roles = relationship(
-        "UserRole",
-        back_populates="user",
-        cascade="all, delete-orphan",
-    )
-
-    # Relationship: a user can own multiple restaurants
-    restaurants = relationship(
-        "Restaurant",
-        back_populates="owner",
-        cascade="all, delete-orphan",
+    owner = relationship(
+        "User",
+        back_populates="restaurants",
     )

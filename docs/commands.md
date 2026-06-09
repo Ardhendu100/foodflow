@@ -345,6 +345,11 @@ uv run alembic upgrade head
 # 5. Verify tables/schema
 ```
 
+# Run fastapi using uv
+
+```bash
+uv run uvicorn foodflow.main:app --reload
+```
 ---
 
 ## Learning Summary
