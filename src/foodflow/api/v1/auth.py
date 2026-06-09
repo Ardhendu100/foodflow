@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
+from fastapi.security import OAuth2PasswordRequestForm
 from foodflow.application.auth.schemas import (
     RegisterRequest,
     LoginRequest,
@@ -69,6 +69,30 @@ def login(
     service = AuthService(repository)
 
     try:
+        return service.login_user(request)
+
+    except ValueError as error:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(error),
+        )
+
+
+@router.post("/token")
+def login_for_swagger(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db),
+):
+    repository = AuthRepository(db)
+
+    service = AuthService(repository)
+
+    try:
+        request = LoginRequest(
+            email=form_data.username,
+            password=form_data.password,
+        )
+
         return service.login_user(request)
 
     except ValueError as error:

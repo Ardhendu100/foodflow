@@ -1,22 +1,22 @@
 from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, String
+from sqlalchemy import DateTime, ForeignKey, Numeric, String, Boolean, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from foodflow.infrastructure.database.base import Base
 
 
-class Restaurant(Base):
-    __tablename__ = "restaurants"
+class MenuItem(Base):
+    __tablename__ = "menu_items"
 
     id: Mapped[UUID] = mapped_column(
         primary_key=True,
         default=uuid4,
     )
 
-    owner_id: Mapped[UUID] = mapped_column(
-        ForeignKey("users.id"),
+    restaurant_id: Mapped[UUID] = mapped_column(
+        ForeignKey("restaurants.id"),
         nullable=False,
     )
 
@@ -30,26 +30,32 @@ class Restaurant(Base):
         nullable=True,
     )
 
-    phone: Mapped[str] = mapped_column(
+    price: Mapped[float] = mapped_column(
+        Numeric(10, 2),
+        nullable=False,
+    )
+
+    image_url: Mapped[str | None] = mapped_column(
+        String(1000),
+        nullable=True,
+    )
+
+    # "veg" or "non-veg" - keep small enum-like values
+    veg_type: Mapped[str] = mapped_column(
         String(20),
-        unique=True,
         nullable=False,
+        default="veg",
     )
 
-    email: Mapped[str] = mapped_column(
-        String(255),
-        unique=True,
+    preparation_time_minutes: Mapped[int] = mapped_column(
+        Integer,
         nullable=False,
+        default=10,
     )
 
-    is_active: Mapped[bool] = mapped_column(
+    is_available: Mapped[bool] = mapped_column(
         Boolean,
         default=True,
-    )
-
-    is_verified: Mapped[bool] = mapped_column(
-        Boolean,
-        default=False,
     )
 
     created_at: Mapped[datetime] = mapped_column(
@@ -63,14 +69,7 @@ class Restaurant(Base):
         onupdate=lambda: datetime.now(UTC),
     )
 
-    owner = relationship(
-        "User",
-        back_populates="restaurants",
-    )
-
-    # One-to-many: a restaurant has many menu items
-    menu_items = relationship(
-        "MenuItem",
-        back_populates="restaurant",
-        cascade="all, delete-orphan",
+    restaurant = relationship(
+        "Restaurant",
+        back_populates="menu_items",
     )

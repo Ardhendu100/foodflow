@@ -8,7 +8,7 @@ from foodflow.application.auth.security import decode_token
 from foodflow.infrastructure.database.session import get_db
 from foodflow.infrastructure.repositories.auth_repository import AuthRepository
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 # without it, Authorization Header must be "Bearer <token>" instead of just "<token>" which is more common in mobile apps and other clients. with it, the header can be just "Authorization: <token>" and FastAPI will handle the "Bearer " prefix automatically. It is not Google Login, Facebook Login, or Apple Login specific. It is a general convention for how access tokens are sent in HTTP requests.
 
