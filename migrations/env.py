@@ -6,11 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from foodflow.infrastructure.database.base import Base
-# from foodflow.domain.models.user import User
-# from foodflow.domain.models.role import Role
-# from foodflow.domain.models.permission import Permission
-# from foodflow.domain.models.user_role import UserRole
-# from foodflow.domain.models.role_permission import RolePermission
+from foodflow.domain.models import *  # noqa: F403
 
 
 # this is the Alembic Config object, which provides

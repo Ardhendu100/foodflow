@@ -5,6 +5,8 @@ from .restaurant import Restaurant
 from .menu_item import MenuItem
 from .user import User
 from .user_role import UserRole
+from .cart import Cart
+from .cart_item import CartItem
 
 __all__ = [
     "User",
@@ -14,4 +16,6 @@ __all__ = [
     "RolePermission",
     "Restaurant",
     "MenuItem",
+    "Cart",
+    "CartItem",
 ]
