@@ -78,3 +78,8 @@ class MenuItem(Base):
         "CartItem",
         back_populates="menu_item",
     )
+
+    order_items = relationship(
+        "OrderItem",
+        back_populates="menu_item",
+    )
