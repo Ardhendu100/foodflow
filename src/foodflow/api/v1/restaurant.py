@@ -16,6 +16,8 @@ from foodflow.application.auth.permission import (
     require_permission,
 )
 
+from foodflow.infrastructure.cache.cache_factory import CacheFactory
+
 router = APIRouter(
     prefix="/restaurants",
     tags=["Restaurants"],
@@ -66,7 +68,8 @@ def list_restaurants(
     db: Session = Depends(get_db),
 ):
     repository = RestaurantRepository(db)
-    service = RestaurantService(repository)
+    cache = CacheFactory.get_cache()
+    service = RestaurantService(repository, cache)
 
     owner_uuid = None
     if owner_id:

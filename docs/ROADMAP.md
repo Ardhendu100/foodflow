@@ -578,3 +578,18 @@ Sprint 9
 Performance
 Scaling
 Observability
+
+
+1. Redis Cache
+2. Cache Invalidation
+3. Rate Limiting
+4. Celery + Redis Queue
+5. Event Driven Architecture
+6. Pub/Sub
+7. Fan-Out
+8. RabbitMQ
+9. Dead Letter Queue
+10. Load Balancer
+11. Horizontal Scaling
+12. API Gateway
+13. Microservices
