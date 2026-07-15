@@ -22,7 +22,8 @@ source .venv/bin/activate
 ## Initialize Python Project
 
 ```bash
-uv init --package
+uv init --app --no-package
+
 ```
 
 ---
